@@ -1,0 +1,20 @@
+services:
+  jupyter:
+    build:
+      context: .
+      args:
+        JUPYTER_BASE_IMAGE: ${JUPYTER_BASE_IMAGE:-quay.io/jupyter/r-notebook:2026-07-28}
+    image: ${IMAGE_NAME:-local/ml-cv-jupyter}:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${JUPYTER_PORT:-8888}:8888"
+    environment:
+      JUPYTER_TOKEN: ${JUPYTER_TOKEN:?Set JUPYTER_TOKEN in .env}
+      DOCKER_STACKS_JUPYTER_CMD: ${JUPYTER_FRONTEND:-lab}
+      TZ: ${TZ:-Europe/Berlin}
+    command:
+      - start-notebook.py
+      - --ServerApp.root_dir=/home/jovyan/work
+    volumes:
+      - ../workspace:/home/jovyan/work
+    shm_size: ${SHM_SIZE:-1gb}

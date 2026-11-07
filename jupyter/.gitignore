@@ -1,0 +1,35 @@
+# Local secrets and settings
+.env
+.env.*
+!.env.example
+
+# Python, Jupyter
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# R
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+.Renviron
+renv/library/
+
+# Generated datasets, artifacts and models (shared workspace)
+../workspace/data/
+../workspace/models/
+../workspace/outputs/
+../workspace/.cache/
+*.log
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

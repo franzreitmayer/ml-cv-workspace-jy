@@ -1,0 +1,20 @@
+services:
+  rstudio:
+    build:
+      context: .
+      args:
+        R_VERSION: ${R_VERSION:-4.5.2}
+    image: ${IMAGE_NAME:-local/ml-cv-rstudio}:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${RSTUDIO_PORT:-8787}:8787"
+    environment:
+      PASSWORD: ${RSTUDIO_PASSWORD:?Set RSTUDIO_PASSWORD in .env}
+      USERID: ${USER_ID:-1000}
+      GROUPID: ${GROUP_ID:-1000}
+      RETICULATE_PYTHON: /opt/pyenv/bin/python
+      PYTHONPATH: /home/rstudio/workspace
+      TZ: ${TZ:-Europe/Berlin}
+    volumes:
+      - ./workspace:/home/rstudio/workspace
+    shm_size: ${SHM_SIZE:-1gb}
